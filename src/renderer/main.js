@@ -6,11 +6,15 @@ import router from './router'
 import store from './store/store.js'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
+import VueLazyload from 'vue-lazyload'
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(ElementUI);
+Vue.use(VueLazyload, {
+  loading: '/static/images/load.gif'
+})
 
 /* eslint-disable no-new */
 new Vue({

@@ -6,7 +6,8 @@
     <div class="row">
       <div class="column">
         <div class="logo">
-          <img src="~@/assets/icon.png">
+          <!-- <img src="~@/assets/icon.png"> -->
+          <img v-lazy = "`http://images.yome11.cn/avatar/1638169429471.png`">
         </div>
       </div>
 
