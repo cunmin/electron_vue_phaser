@@ -4,6 +4,7 @@ import Leaderboard from '../components/Leaderboard';
 import Game from '../components/Game';
 import Vueapp from '../components/App';
 import PetGameC from '../components/PetGameC';
+import Goods from '../common/goods';
 
 Vue.use(Router)
 
@@ -22,7 +23,11 @@ export default new Router({
     {
       path: '/leaderboard',
       name: 'leaderboard',
-      component: Leaderboard
+      component: Leaderboard,
+      children: [
+        // {path: 'leaderboard',name: 'leaderboard', component: Leaderboard},
+        { path: 'goods',name: 'goods' ,component: Goods },
+      ]
     },
     {
       path: '/PetGameC',
