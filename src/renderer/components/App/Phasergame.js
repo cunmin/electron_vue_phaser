@@ -4,6 +4,7 @@ import Boot from './Boot.js';
 import Preloader from './Preloader.js';
 import MainMenu from './MainMenu.js';
 import MainGame from './Game.js';
+import PianoGame from './Piano/PianoGame';
 
 // var tempid;
 
@@ -102,12 +103,16 @@ class WrapinCamera extends Phaser.Scene {
     additems() {
         const button1 = this.add.text(10, 10, 'Germs', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' });
         const button2 = this.add.text(10, 48, 'Hide Parent Layer', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' });
+        const piano_btn = this.add.text(10, 86, 'Piano', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' })
 
         button1.setPadding(0, 8, 0, 8);
         button2.setPadding(0, 8, 0, 8);
+        piano_btn.setPadding(0, 8, 0, 8);
 
         button1.setInteractive();
         button2.setInteractive();
+        piano_btn.setInteractive();
+
 
         button1.on('pointerdown', () => {
 
@@ -119,6 +124,12 @@ class WrapinCamera extends Phaser.Scene {
 
             console.log("button2");
 
+        });
+
+        piano_btn.on('pointerdown', () => {
+
+            console.log("piano_btn");
+            this.scene.start('PianoGame');
         });
     }
 
@@ -160,7 +171,7 @@ function launch(containerId) {
         width: 800,
         height: 600,
         // scene: MyGame,
-        scene: [WrapinCamera, Boot, Preloader, MainMenu, MainGame],
+        scene: [WrapinCamera,PianoGame, Boot, Preloader, MainMenu, MainGame],
         // scene: [ Boot, Preloader, MainMenu, MainGame ],
         physics: {
             default: 'arcade',
