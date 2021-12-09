@@ -1,5 +1,5 @@
 //shift octaves left / right
-var lower_offset = 24, upper_offset = 36
+var lower_offset = 24, upper_offset = 36, click_flag = true
 // piano bg co-ordinates
 
 var pX = 400
@@ -92,6 +92,48 @@ export default class PianoGame extends Phaser.Scene {
       delete keys_down[event.keyCode]
     })
 
+  }
+
+  update() {
+    console.log("update()--click_flag--", click_flag)
+    //touch事件
+    if (this.game.input.activePointer.isDown && click_flag) {
+      this.clicked();
+    } 
+    else{
+      click_flag = true
+    }
+    //没有isUp事件
+    // if (this.game.input.activePointer.isUp) click_flag = true
+  }
+
+  clicked() {
+    click_flag = false
+    var mX = this.game.input.mousePointer.x
+    var mY = this.game.input.mousePointer.y
+    console.log("mx===", mX)
+    console.log("my===", mY)
+    if (mX >= pX) {
+      if (pY < mY && mY < 460) {
+        if (mY < 360) {
+          x = mX - 50
+          var played = false
+          for (this.audio_tag in cursor_high) {
+            if (cursor_high[audio_tag] <= x && cursor_high[audio_tag] + 16 >= x) {
+              this.play_note(this.audio_tag)
+              played = true
+              break
+            }
+          }
+          if (!played) play_note(cursor_low[Math.floor((mX - 50) / 24)])
+        }
+
+        else {
+          this.audio_tag = cursor_low[Math.floor((mX - 50) / 24)]
+          this.play_note(this.audio_tag)
+        }
+      }
+    }
   }
 
   play_note(audio_tag) {
