@@ -5,6 +5,7 @@ import Preloader from './Preloader.js';
 import MainMenu from './MainMenu.js';
 import MainGame from './Game.js';
 import PianoGame from './Piano/PianoGame';
+import MatchGame from './match_pairs/MatchGame'
 
 // var tempid;
 
@@ -16,9 +17,13 @@ class WrapinCamera extends Phaser.Scene {
     preload() {
         this.load.image('back', 'src/renderer/assets/back.png');
         this.load.html('nameform', 'src/renderer/assets/loginform.html');
+        this.load.atlas('spriteset','src/renderer/assets/match_pairs/spritesheet.png','src/renderer/assets/match_pairs/spritesheet.jsona')
     }
 
     create() {
+        // var atlastexture = this.textures.get('match')
+        // atlastexture.get
+        this.add.sprite(200,200,'spriteset','covershape.png');
         this.graphics = this.add.graphics();
 
         this.shapes = new Array(15).fill(null).map(
@@ -104,15 +109,17 @@ class WrapinCamera extends Phaser.Scene {
         const button1 = this.add.text(10, 10, 'Germs', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' });
         const button2 = this.add.text(10, 48, 'Hide Parent Layer', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' });
         const piano_btn = this.add.text(10, 86, 'Piano', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' })
+        const match_pairs = this.add.text(10, 124, 'Match Pairs', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' })
 
         button1.setPadding(0, 8, 0, 8);
         button2.setPadding(0, 8, 0, 8);
         piano_btn.setPadding(0, 8, 0, 8);
+        match_pairs.setPadding(0, 8, 0, 8);
 
         button1.setInteractive();
         button2.setInteractive();
         piano_btn.setInteractive();
-
+        match_pairs.setInteractive();
 
         button1.on('pointerdown', () => {
 
@@ -131,6 +138,10 @@ class WrapinCamera extends Phaser.Scene {
             console.log("piano_btn");
             this.scene.start('PianoGame');
         });
+        match_pairs.on('pointerdown',()=>{
+            console.log("match_pairs");
+            this.scene.start('MatchGame');
+        })
     }
 
     update() {
@@ -171,7 +182,7 @@ function launch(containerId) {
         width: 800,
         height: 600,
         // scene: MyGame,
-        scene: [WrapinCamera,PianoGame, Boot, Preloader, MainMenu, MainGame],
+        scene: [WrapinCamera,MatchGame,PianoGame, Boot, Preloader, MainMenu, MainGame],
         // scene: [ Boot, Preloader, MainMenu, MainGame ],
         physics: {
             default: 'arcade',
