@@ -6,7 +6,8 @@ import MainMenu from './MainMenu.js';
 import MainGame from './Game.js';
 import PianoGame from './Piano/PianoGame';
 import MatchGame from './match_pairs/MatchGame'
-
+import RunnerGame from './infinite_runner/Game'
+import RunnerGameOver from './infinite_runner/RunnerGameOver';
 // var tempid;
 
 class WrapinCamera extends Phaser.Scene {
@@ -17,13 +18,13 @@ class WrapinCamera extends Phaser.Scene {
     preload() {
         this.load.image('back', 'src/renderer/assets/back.png');
         this.load.html('nameform', 'src/renderer/assets/loginform.html');
-        this.load.atlas('spriteset','src/renderer/assets/match_pairs/spritesheet.png','src/renderer/assets/match_pairs/spritesheet.jsona')
+        this.load.atlas('spriteset', 'src/renderer/assets/match_pairs/spritesheet.png', 'src/renderer/assets/match_pairs/spritesheet.jsona')
     }
 
     create() {
         // var atlastexture = this.textures.get('match')
         // atlastexture.get
-        this.add.sprite(200,200,'spriteset','covershape.png');
+        this.add.sprite(200, 200, 'spriteset', 'covershape.png');
         this.graphics = this.add.graphics();
 
         this.shapes = new Array(15).fill(null).map(
@@ -48,9 +49,9 @@ class WrapinCamera extends Phaser.Scene {
             'padding-top': '10px',
             'padding-left': '40px',
         };
-    
+
         var element2 = this.add.dom(650, 80, 'div', style, 'Phaser 3');
-    
+
 
 
     }
@@ -110,16 +111,19 @@ class WrapinCamera extends Phaser.Scene {
         const button2 = this.add.text(10, 48, 'Hide Parent Layer', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' });
         const piano_btn = this.add.text(10, 86, 'Piano', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' })
         const match_pairs = this.add.text(10, 124, 'Match Pairs', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' })
+        const infinite_runner = this.add.text(10, 162, 'Infinite Runner', { backgroundColor: '#0000aa', fixedWidth: 210, align: 'center' })
 
         button1.setPadding(0, 8, 0, 8);
         button2.setPadding(0, 8, 0, 8);
         piano_btn.setPadding(0, 8, 0, 8);
         match_pairs.setPadding(0, 8, 0, 8);
+        infinite_runner.setPadding(0, 8, 0, 8);
 
         button1.setInteractive();
         button2.setInteractive();
         piano_btn.setInteractive();
         match_pairs.setInteractive();
+        infinite_runner.setInteractive();
 
         button1.on('pointerdown', () => {
 
@@ -138,9 +142,13 @@ class WrapinCamera extends Phaser.Scene {
             console.log("piano_btn");
             this.scene.start('PianoGame');
         });
-        match_pairs.on('pointerdown',()=>{
+        match_pairs.on('pointerdown', () => {
             console.log("match_pairs");
             this.scene.start('MatchGame');
+        });
+        infinite_runner.on('pointerdown', () => {
+            console.log("infinite_runner");
+            this.scene.start('RunnerGame');
         })
     }
 
@@ -178,15 +186,15 @@ function launch(containerId) {
     return new Phaser.Game({
         type: Phaser.AUTO,
         parent: containerId,
-        dom: {createContainer:true},
+        dom: { createContainer: true },
         width: 800,
-        height: 600,
+        height: 640,
         // scene: MyGame,
-        scene: [WrapinCamera,MatchGame,PianoGame, Boot, Preloader, MainMenu, MainGame],
+        scene: [WrapinCamera,RunnerGame,RunnerGameOver, MatchGame, PianoGame, Boot, Preloader, MainMenu, MainGame],
         // scene: [ Boot, Preloader, MainMenu, MainGame ],
         physics: {
             default: 'arcade',
-            arcade: { debug: false }
+            arcade: { gravity: { y: 200 }, debug: true }
         }
     });
 }
