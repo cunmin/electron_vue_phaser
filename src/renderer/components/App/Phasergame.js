@@ -148,6 +148,10 @@ class WrapinCamera extends Phaser.Scene {
         });
         infinite_runner.on('pointerdown', () => {
             console.log("infinite_runner");
+            window.global = {
+                score: 0,
+                flag: false
+            }
             this.scene.start('RunnerGame');
         })
     }
@@ -195,7 +199,8 @@ function launch(containerId) {
         physics: {
             default: 'arcade',
             arcade: { gravity: { y: 200 }, debug: true }
-        }
+        },
+        backgroundColor: 0x373F6C
     });
 }
 

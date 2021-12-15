@@ -64,7 +64,7 @@ export default class RocketMouse extends Phaser.GameObjects.Container{
   preUpdate()
 	{
 		const body = this.body 
-		console.log("preUpdate=====")
+		// console.log("preUpdate=====")
 		switch (this.mouseState)
 		{
 			case MouseState.Running:
